@@ -1,0 +1,3 @@
+/workspaces/Proyecto_tercer_parcial/build/CMakeFiles/MandatoFinal.dir
+/workspaces/Proyecto_tercer_parcial/build/CMakeFiles/edit_cache.dir
+/workspaces/Proyecto_tercer_parcial/build/CMakeFiles/rebuild_cache.dir

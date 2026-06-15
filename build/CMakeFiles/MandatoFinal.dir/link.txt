@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/MandatoFinal.dir/src/demo.cpp.o -o MandatoFinal  -lSDL2 
