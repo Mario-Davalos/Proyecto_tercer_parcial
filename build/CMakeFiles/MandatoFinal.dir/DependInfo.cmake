@@ -8,10 +8,10 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/workspaces/Proyecto_tercer_parcial/src/Bala.cpp" "CMakeFiles/MandatoFinal.dir/src/Bala.cpp.o" "gcc" "CMakeFiles/MandatoFinal.dir/src/Bala.cpp.o.d"
-  "/workspaces/Proyecto_tercer_parcial/src/Enemigo.cpp" "CMakeFiles/MandatoFinal.dir/src/Enemigo.cpp.o" "gcc" "CMakeFiles/MandatoFinal.dir/src/Enemigo.cpp.o.d"
-  "/workspaces/Proyecto_tercer_parcial/src/Jugador.cpp" "CMakeFiles/MandatoFinal.dir/src/Jugador.cpp.o" "gcc" "CMakeFiles/MandatoFinal.dir/src/Jugador.cpp.o.d"
-  "/workspaces/Proyecto_tercer_parcial/src/demo.cpp" "CMakeFiles/MandatoFinal.dir/src/demo.cpp.o" "gcc" "CMakeFiles/MandatoFinal.dir/src/demo.cpp.o.d"
+  "C:/Users/sonic/Proyecto_tercer_parcial/src/Bala.cpp" "CMakeFiles/MandatoFinal.dir/src/Bala.cpp.obj" "gcc" "CMakeFiles/MandatoFinal.dir/src/Bala.cpp.obj.d"
+  "C:/Users/sonic/Proyecto_tercer_parcial/src/Enemigo.cpp" "CMakeFiles/MandatoFinal.dir/src/Enemigo.cpp.obj" "gcc" "CMakeFiles/MandatoFinal.dir/src/Enemigo.cpp.obj.d"
+  "C:/Users/sonic/Proyecto_tercer_parcial/src/Jugador.cpp" "CMakeFiles/MandatoFinal.dir/src/Jugador.cpp.obj" "gcc" "CMakeFiles/MandatoFinal.dir/src/Jugador.cpp.obj.d"
+  "C:/Users/sonic/Proyecto_tercer_parcial/src/demo.cpp" "CMakeFiles/MandatoFinal.dir/src/demo.cpp.obj" "gcc" "CMakeFiles/MandatoFinal.dir/src/demo.cpp.obj.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

@@ -1,14 +1,16 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/MandatoFinal.dir/src/Bala.cpp.o"
-  "CMakeFiles/MandatoFinal.dir/src/Bala.cpp.o.d"
-  "CMakeFiles/MandatoFinal.dir/src/Enemigo.cpp.o"
-  "CMakeFiles/MandatoFinal.dir/src/Enemigo.cpp.o.d"
-  "CMakeFiles/MandatoFinal.dir/src/Jugador.cpp.o"
-  "CMakeFiles/MandatoFinal.dir/src/Jugador.cpp.o.d"
-  "CMakeFiles/MandatoFinal.dir/src/demo.cpp.o"
-  "CMakeFiles/MandatoFinal.dir/src/demo.cpp.o.d"
-  "MandatoFinal"
+  "CMakeFiles/MandatoFinal.dir/src/Bala.cpp.obj"
+  "CMakeFiles/MandatoFinal.dir/src/Bala.cpp.obj.d"
+  "CMakeFiles/MandatoFinal.dir/src/Enemigo.cpp.obj"
+  "CMakeFiles/MandatoFinal.dir/src/Enemigo.cpp.obj.d"
+  "CMakeFiles/MandatoFinal.dir/src/Jugador.cpp.obj"
+  "CMakeFiles/MandatoFinal.dir/src/Jugador.cpp.obj.d"
+  "CMakeFiles/MandatoFinal.dir/src/demo.cpp.obj"
+  "CMakeFiles/MandatoFinal.dir/src/demo.cpp.obj.d"
+  "MandatoFinal.exe"
+  "MandatoFinal.exe.manifest"
   "MandatoFinal.pdb"
+  "libMandatoFinal.dll.a"
 )
 
 # Per-language clean rules from dependency scanning.
