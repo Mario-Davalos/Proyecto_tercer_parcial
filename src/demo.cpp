@@ -19,6 +19,57 @@ SDL_Texture* cargarTextura(const char* ruta, SDL_Renderer* renderer)
     return tex;
 }
 
+// Dibuja un caracter pixel art 5x7
+void dibujarLetra(SDL_Renderer* r, char c, int x, int y, int tam, SDL_Color col)
+{
+    // Fuente pixel art minima para letras necesarias
+    // Cada letra: 5 columnas x 7 filas, bit=1 prendido
+    static const char* letras[] = {
+        "M", "01110" "10001" "11011" "10101" "10001" "10001" "10001",
+        "A", "01110" "10001" "10001" "11111" "10001" "10001" "10001",
+        "N", "10001" "11001" "10101" "10011" "10001" "10001" "10001",
+        "D", "11110" "10001" "10001" "10001" "10001" "10001" "11110",
+        "T", "11111" "00100" "00100" "00100" "00100" "00100" "00100",
+        "O", "01110" "10001" "10001" "10001" "10001" "10001" "01110",
+        "F", "11111" "10000" "10000" "11110" "10000" "10000" "10000",
+        "I", "11111" "00100" "00100" "00100" "00100" "00100" "11111",
+        "L", "10000" "10000" "10000" "10000" "10000" "10000" "11111",
+        "P", "11110" "10001" "10001" "11110" "10000" "10000" "10000",
+        "R", "11110" "10001" "10001" "11110" "10100" "10010" "10001",
+        "E", "11111" "10000" "10000" "11110" "10000" "10000" "11111",
+        "S", "01111" "10000" "10000" "01110" "00001" "00001" "11110",
+        "C", "01110" "10001" "10000" "10000" "10000" "10001" "01110",
+        "U", "10001" "10001" "10001" "10001" "10001" "10001" "01110",
+        "G", "01110" "10001" "10000" "10111" "10001" "10001" "01110",
+        "J", "00111" "00010" "00010" "00010" "10010" "10010" "01100",
+        "!", "00100" "00100" "00100" "00100" "00100" "00000" "00100",
+        " ", "00000" "00000" "00000" "00000" "00000" "00000" "00000",
+        nullptr
+    };
+    const char* bitmap = nullptr;
+    for (int i = 0; letras[i]; i += 2)
+        if (letras[i][0] == c) { bitmap = letras[i+1]; break; }
+    if (!bitmap) return;
+    SDL_SetRenderDrawColor(r, col.r, col.g, col.b, col.a);
+    for (int row = 0; row < 7; row++)
+        for (int col2 = 0; col2 < 5; col2++)
+            if (bitmap[row*5 + col2] == '1')
+            {
+                SDL_Rect px = {x + col2*tam, y + row*tam, tam, tam};
+                SDL_RenderFillRect(r, &px);
+            }
+}
+
+void dibujarTexto(SDL_Renderer* r, const char* texto, int x, int y, int tam, SDL_Color col)
+{
+    int ox = x;
+    for (int i = 0; texto[i]; i++)
+    {
+        dibujarLetra(r, texto[i], ox, y, tam, col);
+        ox += 6 * tam;
+    }
+}
+
 int main()
 {
     SDL_SetMainReady();
@@ -78,13 +129,8 @@ int main()
                     if (evento.key.keysym.sym == SDLK_LEFT)  { personaje--; if (personaje<0) personaje=3; }
                 }
                 if (estado == JUGANDO || estado == JEFE)
-                {
                     if (evento.key.keysym.sym == SDLK_SPACE && !balaActiva)
-                    {
-                        balaActiva = true; balaVaDerecha = miraDerecha;
-                        balaX = jugX + (miraDerecha ? 110 : -20); balaY = jugY + 35;
-                    }
-                }
+                    { balaActiva=true; balaVaDerecha=miraDerecha; balaX=jugX+(miraDerecha?110:-20); balaY=jugY+35; }
                 if (estado == VICTORIA && evento.key.keysym.sym == SDLK_ESCAPE) corriendo = false;
             }
         }
@@ -96,7 +142,7 @@ int main()
             if (keys[SDL_SCANCODE_D] || keys[SDL_SCANCODE_RIGHT]) { jugX += 5; miraDerecha = true; }
             if ((keys[SDL_SCANCODE_W] || keys[SDL_SCANCODE_UP]) && enSuelo) { velY = -17; enSuelo = false; }
             velY += 0.7f; jugY += velY;
-            if (jugY >= 580) { jugY = 580; velY = 0; enSuelo = true; }
+            if (jugY >= 580) { jugY=580; velY=0; enSuelo=true; }
             if (jugX < 0) jugX = 0;
             if (jugX > 1260) jugX = 1260;
 
@@ -105,21 +151,17 @@ int main()
                 balaX += balaVaDerecha ? 15 : -15;
                 if (balaX > 1400 || balaX < -50) balaActiva = false;
                 if (estado == JUGANDO)
-                {
                     for (int i = 0; i < N; i++)
                     {
                         if (!enVivo[i]) continue;
-                        if (balaX > enX[i] && balaX < enX[i]+70 && balaY > enY[i] && balaY < enY[i]+100)
-                        { enVivo[i] = false; balaActiva = false; eliminados++; }
+                        if (balaX>enX[i] && balaX<enX[i]+70 && balaY>enY[i] && balaY<enY[i]+100)
+                        { enVivo[i]=false; balaActiva=false; eliminados++; }
                     }
-                }
                 if (estado == JEFE)
-                {
-                    if (balaX > jefeX && balaX < jefeX+130 && balaY > jefeY && balaY < jefeY+160)
-                    { balaActiva = false; vidaJefe--; if (vidaJefe <= 0) estado = VICTORIA; }
-                }
+                    if (balaX>jefeX && balaX<jefeX+130 && balaY>jefeY && balaY<jefeY+160)
+                    { balaActiva=false; vidaJefe--; if(vidaJefe<=0) estado=VICTORIA; }
             }
-            if (estado == JUGANDO && eliminados >= N) { estado = JEFE; jefeX = 900; jefeY = 500; }
+            if (estado == JUGANDO && eliminados >= N) { estado=JEFE; jefeX=900; jefeY=500; }
         }
 
         if (estado == JEFE)
@@ -132,16 +174,14 @@ int main()
             {
                 timerJefe = 0;
                 for (int i = 0; i < MBJ; i++)
-                {
                     if (!bjActiva[i]) { bjX[i]=jefeX+20; bjY[i]=620; bjVelX[i]=(jefeX>jugX)?-9.0f:9.0f; bjActiva[i]=true; break; }
-                }
             }
             if (cooldownDano > 0) cooldownDano--;
             for (int i = 0; i < MBJ; i++)
             {
                 if (!bjActiva[i]) continue;
                 bjX[i] += bjVelX[i];
-                if (bjX[i] < -50 || bjX[i] > 1450) { bjActiva[i]=false; continue; }
+                if (bjX[i]<-50 || bjX[i]>1450) { bjActiva[i]=false; continue; }
                 if (bjX[i]>jugX && bjX[i]<jugX+110 && 620>jugY+20 && 620<jugY+130 && cooldownDano==0)
                 { vidaJugador--; cooldownDano=90; bjActiva[i]=false; if(vidaJugador<=0){vidaJugador=5;jugX=150;jugY=580;} }
             }
@@ -153,104 +193,113 @@ int main()
         if (estado == MENU)
         {
             SDL_SetRenderDrawColor(renderer, 15, 10, 30, 255); SDL_RenderClear(renderer);
-            SDL_SetRenderDrawColor(renderer, 220, 180, 0, 255);
-            SDL_Rect t1={388,80,600,12}, t2={388,160,600,12};
-            SDL_RenderFillRect(renderer,&t1); SDL_RenderFillRect(renderer,&t2);
-            SDL_SetRenderDrawColor(renderer, 255, 220, 0, 255);
-            for (int i=0;i<13;i++){SDL_Rect b={420+i*40,100,28,50};SDL_RenderFillRect(renderer,&b);}
-            SDL_Texture* pj[4]={texMillon,texBuchona,texAlucin,texPelucho};
-            for (int i=0;i<4;i++)
+
+            // Titulo MANDATO FINAL
+            SDL_Color amarillo = {255, 200, 0, 255};
+            SDL_Color rojo     = {220, 40,  0, 255};
+            dibujarTexto(renderer, "MANDATO", 270, 60, 7, amarillo);
+            dibujarTexto(renderer, "FINAL",   390, 130, 7, rojo);
+
+            // Personajes
+            SDL_Texture* pj[4] = {texMillon, texBuchona, texAlucin, texPelucho};
+            for (int i = 0; i < 4; i++)
             {
-                SDL_Rect r={150+i*270,250,160,220};
-                if (i==personaje && (tick/15)%2==0){SDL_SetRenderDrawColor(renderer,255,220,0,255);SDL_Rect m={r.x-6,r.y-6,r.w+12,r.h+12};SDL_RenderFillRect(renderer,&m);}
-                if (pj[i]) SDL_RenderCopy(renderer,pj[i],nullptr,&r);
-                else{SDL_SetRenderDrawColor(renderer,80,80,200,255);SDL_RenderFillRect(renderer,&r);}
+                SDL_Rect rect = {150 + i*270, 260, 160, 220};
+                if (i == personaje)
+                {
+                    bool parpadeo = (tick/15)%2==0;
+                    if (parpadeo) { SDL_SetRenderDrawColor(renderer,255,220,0,255); SDL_Rect m={rect.x-6,rect.y-6,rect.w+12,rect.h+12}; SDL_RenderFillRect(renderer,&m); }
+                }
+                if (pj[i]) SDL_RenderCopy(renderer, pj[i], nullptr, &rect);
+                else { SDL_SetRenderDrawColor(renderer,80,80,200,255); SDL_RenderFillRect(renderer,&rect); }
             }
-            if ((tick/20)%2==0){SDL_SetRenderDrawColor(renderer,200,200,200,255);SDL_Rect i1={488,560,400,8},i2={488,580,400,8};SDL_RenderFillRect(renderer,&i1);SDL_RenderFillRect(renderer,&i2);}
+
+            // Press Enter
+            if ((tick/20)%2==0)
+            {
+                SDL_Color blanco = {220, 220, 220, 255};
+                dibujarTexto(renderer, "PRESS ENTER", 370, 580, 5, blanco);
+            }
         }
 
         if (estado == JUGANDO || estado == JEFE)
         {
-            if (texMapa) SDL_RenderCopy(renderer,texMapa,nullptr,nullptr);
-            else{SDL_SetRenderDrawColor(renderer,30,60,30,255);SDL_RenderClear(renderer);}
+            if (texMapa) SDL_RenderCopy(renderer, texMapa, nullptr, nullptr);
+            else { SDL_SetRenderDrawColor(renderer,30,60,30,255); SDL_RenderClear(renderer); }
             SDL_SetRenderDrawColor(renderer,60,40,20,255);
             SDL_Rect piso={0,670,1376,100}; SDL_RenderFillRect(renderer,&piso);
 
-            SDL_Texture* texJug=texMillon;
-            if(personaje==1)texJug=texBuchona;
-            if(personaje==2)texJug=texAlucin;
-            if(personaje==3)texJug=texPelucho;
-            bool renderJug=!(cooldownDano>0&&(tick/5)%2==0);
-            if(renderJug){
+            SDL_Texture* texJug = texMillon;
+            if(personaje==1) texJug=texBuchona;
+            if(personaje==2) texJug=texAlucin;
+            if(personaje==3) texJug=texPelucho;
+            bool renderJug = !(cooldownDano>0 && (tick/5)%2==0);
+            if (renderJug)
+            {
                 SDL_Rect rj={(int)jugX,(int)jugY,110,130};
                 if(texJug) SDL_RenderCopyEx(renderer,texJug,nullptr,&rj,0,nullptr,miraDerecha?SDL_FLIP_NONE:SDL_FLIP_HORIZONTAL);
-                else{SDL_SetRenderDrawColor(renderer,0,150,255,255);SDL_RenderFillRect(renderer,&rj);}
+                else { SDL_SetRenderDrawColor(renderer,0,150,255,255); SDL_RenderFillRect(renderer,&rj); }
             }
-            if(balaActiva){
-                SDL_SetRenderDrawColor(renderer,255,255,100,255);SDL_Rect rb={(int)balaX,(int)balaY,20,8};SDL_RenderFillRect(renderer,&rb);
-                SDL_SetRenderDrawColor(renderer,255,180,0,255);SDL_Rect rb2={(int)balaX+2,(int)balaY+2,14,4};SDL_RenderFillRect(renderer,&rb2);
+            if (balaActiva)
+            {
+                SDL_SetRenderDrawColor(renderer,255,255,100,255); SDL_Rect rb={(int)balaX,(int)balaY,20,8}; SDL_RenderFillRect(renderer,&rb);
+                SDL_SetRenderDrawColor(renderer,255,180,0,255); SDL_Rect rb2={(int)balaX+2,(int)balaY+2,14,4}; SDL_RenderFillRect(renderer,&rb2);
             }
-            if(estado==JUGANDO){
-                for(int i=0;i<N;i++){
-                    if(!enVivo[i])continue;
+            if (estado == JUGANDO)
+            {
+                for (int i=0;i<N;i++)
+                {
+                    if(!enVivo[i]) continue;
                     SDL_Rect re={(int)enX[i],(int)enY[i],70,100};
-                    if(texEnemigo)SDL_RenderCopy(renderer,texEnemigo,nullptr,&re);
-                    else{SDL_SetRenderDrawColor(renderer,180,30,30,255);SDL_RenderFillRect(renderer,&re);}
+                    if(texEnemigo) SDL_RenderCopy(renderer,texEnemigo,nullptr,&re);
+                    else { SDL_SetRenderDrawColor(renderer,180,30,30,255); SDL_RenderFillRect(renderer,&re); }
                 }
-                for(int i=0;i<N;i++){
+                for(int i=0;i<N;i++)
+                {
                     SDL_Rect ind={10+i*32,10,26,26};
                     SDL_SetRenderDrawColor(renderer,enVivo[i]?220:40,enVivo[i]?40:200,40,255);
                     SDL_RenderFillRect(renderer,&ind);
-                    SDL_SetRenderDrawColor(renderer,255,255,255,255);SDL_RenderDrawRect(renderer,&ind);
+                    SDL_SetRenderDrawColor(renderer,255,255,255,255); SDL_RenderDrawRect(renderer,&ind);
                 }
-                SDL_SetRenderDrawColor(renderer,50,50,50,255);SDL_Rect bf={10,44,320,12};SDL_RenderFillRect(renderer,&bf);
-                SDL_SetRenderDrawColor(renderer,255,200,0,255);SDL_Rect bp={10,44,(int)(320.0f*eliminados/N),12};SDL_RenderFillRect(renderer,&bp);
+                SDL_SetRenderDrawColor(renderer,50,50,50,255); SDL_Rect bf={10,44,320,12}; SDL_RenderFillRect(renderer,&bf);
+                SDL_SetRenderDrawColor(renderer,255,200,0,255); SDL_Rect bp={10,44,(int)(320.0f*eliminados/N),12}; SDL_RenderFillRect(renderer,&bp);
             }
-            if(estado==JEFE){
+            if (estado == JEFE)
+            {
                 SDL_Rect rjefe={(int)jefeX,(int)jefeY,130,160};
-                if(texJefe)SDL_RenderCopyEx(renderer,texJefe,nullptr,&rjefe,0,nullptr,jefeDir>0?SDL_FLIP_NONE:SDL_FLIP_HORIZONTAL);
-                else{SDL_SetRenderDrawColor(renderer,200,0,200,255);SDL_RenderFillRect(renderer,&rjefe);}
-                for(int i=0;i<MBJ;i++){
-                    if(!bjActiva[i])continue;
-                    SDL_SetRenderDrawColor(renderer,255,50,50,255);SDL_Rect rb={(int)bjX[i],615,18,8};SDL_RenderFillRect(renderer,&rb);
-                    SDL_SetRenderDrawColor(renderer,255,150,0,255);SDL_Rect rb2={(int)bjX[i]+2,617,12,4};SDL_RenderFillRect(renderer,&rb2);
+                if(texJefe) SDL_RenderCopyEx(renderer,texJefe,nullptr,&rjefe,0,nullptr,jefeDir>0?SDL_FLIP_NONE:SDL_FLIP_HORIZONTAL);
+                else { SDL_SetRenderDrawColor(renderer,200,0,200,255); SDL_RenderFillRect(renderer,&rjefe); }
+                for(int i=0;i<MBJ;i++)
+                {
+                    if(!bjActiva[i]) continue;
+                    SDL_SetRenderDrawColor(renderer,255,50,50,255); SDL_Rect rb={(int)bjX[i],615,18,8}; SDL_RenderFillRect(renderer,&rb);
+                    SDL_SetRenderDrawColor(renderer,255,150,0,255); SDL_Rect rb2={(int)bjX[i]+2,617,12,4}; SDL_RenderFillRect(renderer,&rb2);
                 }
-                SDL_SetRenderDrawColor(renderer,80,0,0,255);SDL_Rect vf={400,20,576,20};SDL_RenderFillRect(renderer,&vf);
-                SDL_SetRenderDrawColor(renderer,220,30,30,255);SDL_Rect vb={400,20,(int)(576.0f*vidaJefe/10),20};SDL_RenderFillRect(renderer,&vb);
-                SDL_SetRenderDrawColor(renderer,255,100,100,255);SDL_RenderDrawRect(renderer,&vf);
-                for(int i=0;i<5;i++){
+                SDL_SetRenderDrawColor(renderer,80,0,0,255); SDL_Rect vf={400,20,576,20}; SDL_RenderFillRect(renderer,&vf);
+                SDL_SetRenderDrawColor(renderer,220,30,30,255); SDL_Rect vb={400,20,(int)(576.0f*vidaJefe/10),20}; SDL_RenderFillRect(renderer,&vb);
+                SDL_SetRenderDrawColor(renderer,255,100,100,255); SDL_RenderDrawRect(renderer,&vf);
+                for(int i=0;i<5;i++)
+                {
                     SDL_SetRenderDrawColor(renderer,i<vidaJugador?255:60,i<vidaJugador?50:60,i<vidaJugador?50:60,255);
-                    SDL_Rect c={10+i*36,10,28,28};SDL_RenderFillRect(renderer,&c);
-                    SDL_SetRenderDrawColor(renderer,255,255,255,255);SDL_RenderDrawRect(renderer,&c);
+                    SDL_Rect c={10+i*36,10,28,28}; SDL_RenderFillRect(renderer,&c);
+                    SDL_SetRenderDrawColor(renderer,255,255,255,255); SDL_RenderDrawRect(renderer,&c);
                 }
             }
         }
 
-        if(estado==VICTORIA){
-            SDL_SetRenderDrawColor(renderer,0,60,0,255);SDL_RenderClear(renderer);
+        if (estado == VICTORIA)
+        {
+            SDL_SetRenderDrawColor(renderer,0,60,0,255); SDL_RenderClear(renderer);
             SDL_SetRenderDrawColor(renderer,220,180,0,255);
-            SDL_Rect m1={100,100,1176,568},m2={110,110,1156,548};SDL_RenderDrawRect(renderer,&m1);SDL_RenderDrawRect(renderer,&m2);
-            SDL_SetRenderDrawColor(renderer,255,220,0,255);
-            SDL_Rect y1={450,200,20,80};SDL_RenderFillRect(renderer,&y1);
-            SDL_Rect y2={490,200,20,80};SDL_RenderFillRect(renderer,&y2);
-            SDL_Rect y3={463,260,30,20};SDL_RenderFillRect(renderer,&y3);
-            SDL_Rect y4={463,280,20,80};SDL_RenderFillRect(renderer,&y4);
-            SDL_Rect o1={540,200,60,20};SDL_RenderFillRect(renderer,&o1);
-            SDL_Rect o2={540,340,60,20};SDL_RenderFillRect(renderer,&o2);
-            SDL_Rect o3={540,200,20,160};SDL_RenderFillRect(renderer,&o3);
-            SDL_Rect o4={580,200,20,160};SDL_RenderFillRect(renderer,&o4);
-            SDL_Rect u1={630,200,20,160};SDL_RenderFillRect(renderer,&u1);
-            SDL_Rect u2={670,200,20,160};SDL_RenderFillRect(renderer,&u2);
-            SDL_Rect u3={630,340,60,20};SDL_RenderFillRect(renderer,&u3);
-            SDL_Rect w1={730,200,20,160};SDL_RenderFillRect(renderer,&w1);
-            SDL_Rect w2={820,200,20,160};SDL_RenderFillRect(renderer,&w2);
-            SDL_Rect w3={760,300,20,60};SDL_RenderFillRect(renderer,&w3);
-            SDL_Rect w4={790,300,20,60};SDL_RenderFillRect(renderer,&w4);
-            SDL_Rect ii={860,200,20,160};SDL_RenderFillRect(renderer,&ii);
-            SDL_Rect n1={900,200,20,160};SDL_RenderFillRect(renderer,&n1);
-            SDL_Rect n2={960,200,20,160};SDL_RenderFillRect(renderer,&n2);
-            SDL_Rect n3={900,200,80,20};SDL_RenderFillRect(renderer,&n3);
-            if((tick/25)%2==0){SDL_SetRenderDrawColor(renderer,180,180,180,255);SDL_Rect inst={488,500,400,8};SDL_RenderFillRect(renderer,&inst);}
+            SDL_Rect m1={100,100,1176,568},m2={110,110,1156,548};
+            SDL_RenderDrawRect(renderer,&m1); SDL_RenderDrawRect(renderer,&m2);
+            SDL_Color amarillo={255,220,0,255};
+            dibujarTexto(renderer,"GANASTE",330,250,12,amarillo);
+            if((tick/25)%2==0)
+            {
+                SDL_Color blanco={180,180,180,255};
+                dibujarTexto(renderer,"PRESS ESC",360,480,6,blanco);
+            }
         }
 
         SDL_RenderPresent(renderer);
