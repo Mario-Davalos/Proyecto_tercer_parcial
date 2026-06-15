@@ -4,45 +4,51 @@
 
 int main()
 {
-    SDL_Init(SDL_INIT_VIDEO);
-    IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG);
-
-    SDL_Window* ventana =
-        SDL_CreateWindow(
-            "MANDATO FINAL",
-            SDL_WINDOWPOS_CENTERED,
-            SDL_WINDOWPOS_CENTERED,
-            1376,
-            768,
-            SDL_WINDOW_SHOWN
-        );
-
-    SDL_Renderer* renderer =
-        SDL_CreateRenderer(
-            ventana,
-            -1,
-            SDL_RENDERER_ACCELERATED
-        );
-
-    SDL_Surface* fondoSurface =
-        IMG_Load("gallery/Menu.png");
-
-    if (!fondoSurface)
+    if (SDL_Init(SDL_INIT_VIDEO) < 0)
     {
+        std::cout << "Error SDL\n";
+        return 1;
+    }
+
+    if (!(IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG)))
+    {
+        std::cout << "Error SDL_image\n";
+        return 1;
+    }
+
+    SDL_Window* ventana = SDL_CreateWindow(
+        "MANDATO FINAL",
+        SDL_WINDOWPOS_CENTERED,
+        SDL_WINDOWPOS_CENTERED,
+        1376,
+        768,
+        SDL_WINDOW_SHOWN
+    );
+
+    SDL_Renderer* renderer = SDL_CreateRenderer(
+        ventana,
+        -1,
+        SDL_RENDERER_ACCELERATED
+    );
+
+    SDL_Surface* surface = IMG_Load("gallery/Menu.png");
+
+    if (!surface)
+    {
+        std::cout << "No se pudo cargar Menu.png\n";
         std::cout << IMG_GetError() << std::endl;
         return 1;
     }
 
-    SDL_Texture* fondo =
+    SDL_Texture* menuTexture =
         SDL_CreateTextureFromSurface(
             renderer,
-            fondoSurface
+            surface
         );
 
-    SDL_FreeSurface(fondoSurface);
+    SDL_FreeSurface(surface);
 
     bool ejecutando = true;
-
     SDL_Event evento;
 
     while (ejecutando)
@@ -51,22 +57,13 @@ int main()
         {
             if (evento.type == SDL_QUIT)
                 ejecutando = false;
-
-            if (evento.type == SDL_KEYDOWN)
-            {
-                if (evento.key.keysym.sym == SDLK_RETURN)
-                {
-                    std::cout
-                        << "MENU -> SELECCION\n";
-                }
-            }
         }
 
         SDL_RenderClear(renderer);
 
         SDL_RenderCopy(
             renderer,
-            fondo,
+            menuTexture,
             nullptr,
             nullptr
         );
@@ -74,7 +71,7 @@ int main()
         SDL_RenderPresent(renderer);
     }
 
-    SDL_DestroyTexture(fondo);
+    SDL_DestroyTexture(menuTexture);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(ventana);
 
