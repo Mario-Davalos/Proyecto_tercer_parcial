@@ -11,6 +11,8 @@ pkg_check_modules(SDL2_IMAGE REQUIRED SDL2_image)
 
 add_executable(MandatoFinal
     src/demo.cpp
+    src/Jugador.cpp
+    src/Enemigo.cpp
 )
 
 target_include_directories(MandatoFinal PRIVATE
