@@ -1,28 +1,21 @@
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 #include <iostream>
 
 int main()
 {
-    if (SDL_Init(SDL_INIT_VIDEO) < 0)
-    {
-        std::cout << "Error al iniciar SDL\n";
-        return 1;
-    }
+    SDL_Init(SDL_INIT_VIDEO);
+    IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG);
 
-    SDL_Window* ventana = SDL_CreateWindow(
-        "MANDATO FINAL",
-        SDL_WINDOWPOS_CENTERED,
-        SDL_WINDOWPOS_CENTERED,
-        1280,
-        720,
-        SDL_WINDOW_SHOWN
-    );
-
-    if (!ventana)
-    {
-        std::cout << "Error al crear ventana\n";
-        return 1;
-    }
+    SDL_Window* ventana =
+        SDL_CreateWindow(
+            "MANDATO FINAL",
+            SDL_WINDOWPOS_CENTERED,
+            SDL_WINDOWPOS_CENTERED,
+            1376,
+            768,
+            SDL_WINDOW_SHOWN
+        );
 
     SDL_Renderer* renderer =
         SDL_CreateRenderer(
@@ -31,16 +24,26 @@ int main()
             SDL_RENDERER_ACCELERATED
         );
 
+    SDL_Surface* fondoSurface =
+        IMG_Load("gallery/Menu.png");
+
+    if (!fondoSurface)
+    {
+        std::cout << IMG_GetError() << std::endl;
+        return 1;
+    }
+
+    SDL_Texture* fondo =
+        SDL_CreateTextureFromSurface(
+            renderer,
+            fondoSurface
+        );
+
+    SDL_FreeSurface(fondoSurface);
+
     bool ejecutando = true;
+
     SDL_Event evento;
-
-    float jugadorX = 100;
-    float jugadorY = 500;
-
-    float velocidadX = 0;
-    float velocidadY = 0;
-
-    bool enSuelo = true;
 
     while (ejecutando)
     {
@@ -48,96 +51,34 @@ int main()
         {
             if (evento.type == SDL_QUIT)
                 ejecutando = false;
+
+            if (evento.type == SDL_KEYDOWN)
+            {
+                if (evento.key.keysym.sym == SDLK_RETURN)
+                {
+                    std::cout
+                        << "MENU -> SELECCION\n";
+                }
+            }
         }
-
-        const Uint8* teclado =
-            SDL_GetKeyboardState(NULL);
-
-        velocidadX = 0;
-
-        if (teclado[SDL_SCANCODE_A])
-            velocidadX = -5;
-
-        if (teclado[SDL_SCANCODE_D])
-            velocidadX = 5;
-
-        if (teclado[SDL_SCANCODE_W] && enSuelo)
-        {
-            velocidadY = -12;
-            enSuelo = false;
-        }
-
-        velocidadY += 0.5f;
-
-        jugadorX += velocidadX;
-        jugadorY += velocidadY;
-
-        if (jugadorY >= 500)
-        {
-            jugadorY = 500;
-            velocidadY = 0;
-            enSuelo = true;
-        }
-
-        SDL_SetRenderDrawColor(
-            renderer,
-            20,
-            20,
-            30,
-            255
-        );
 
         SDL_RenderClear(renderer);
 
-        SDL_Rect suelo =
-        {
-            0,
-            600,
-            1280,
-            120
-        };
-
-        SDL_SetRenderDrawColor(
+        SDL_RenderCopy(
             renderer,
-            0,
-            180,
-            0,
-            255
-        );
-
-        SDL_RenderFillRect(
-            renderer,
-            &suelo
-        );
-
-        SDL_Rect jugador =
-        {
-            (int)jugadorX,
-            (int)jugadorY,
-            50,
-            80
-        };
-
-        SDL_SetRenderDrawColor(
-            renderer,
-            0,
-            180,
-            255,
-            255
-        );
-
-        SDL_RenderFillRect(
-            renderer,
-            &jugador
+            fondo,
+            nullptr,
+            nullptr
         );
 
         SDL_RenderPresent(renderer);
-
-        SDL_Delay(16);
     }
 
+    SDL_DestroyTexture(fondo);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(ventana);
+
+    IMG_Quit();
     SDL_Quit();
 
     return 0;
