@@ -13,6 +13,7 @@ add_executable(MandatoFinal
     src/demo.cpp
     src/Jugador.cpp
     src/Enemigo.cpp
+    src/Bala.cpp
 )
 
 target_include_directories(MandatoFinal PRIVATE

@@ -129,6 +129,78 @@ MandatoFinal/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/MandatoFinal.dir/build.make CMakeFiles/MandatoFinal.dir/build
 .PHONY : MandatoFinal/fast
 
+src/Bala.o: src/Bala.cpp.o
+.PHONY : src/Bala.o
+
+# target to build an object file
+src/Bala.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MandatoFinal.dir/build.make CMakeFiles/MandatoFinal.dir/src/Bala.cpp.o
+.PHONY : src/Bala.cpp.o
+
+src/Bala.i: src/Bala.cpp.i
+.PHONY : src/Bala.i
+
+# target to preprocess a source file
+src/Bala.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MandatoFinal.dir/build.make CMakeFiles/MandatoFinal.dir/src/Bala.cpp.i
+.PHONY : src/Bala.cpp.i
+
+src/Bala.s: src/Bala.cpp.s
+.PHONY : src/Bala.s
+
+# target to generate assembly for a file
+src/Bala.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MandatoFinal.dir/build.make CMakeFiles/MandatoFinal.dir/src/Bala.cpp.s
+.PHONY : src/Bala.cpp.s
+
+src/Enemigo.o: src/Enemigo.cpp.o
+.PHONY : src/Enemigo.o
+
+# target to build an object file
+src/Enemigo.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MandatoFinal.dir/build.make CMakeFiles/MandatoFinal.dir/src/Enemigo.cpp.o
+.PHONY : src/Enemigo.cpp.o
+
+src/Enemigo.i: src/Enemigo.cpp.i
+.PHONY : src/Enemigo.i
+
+# target to preprocess a source file
+src/Enemigo.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MandatoFinal.dir/build.make CMakeFiles/MandatoFinal.dir/src/Enemigo.cpp.i
+.PHONY : src/Enemigo.cpp.i
+
+src/Enemigo.s: src/Enemigo.cpp.s
+.PHONY : src/Enemigo.s
+
+# target to generate assembly for a file
+src/Enemigo.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MandatoFinal.dir/build.make CMakeFiles/MandatoFinal.dir/src/Enemigo.cpp.s
+.PHONY : src/Enemigo.cpp.s
+
+src/Jugador.o: src/Jugador.cpp.o
+.PHONY : src/Jugador.o
+
+# target to build an object file
+src/Jugador.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MandatoFinal.dir/build.make CMakeFiles/MandatoFinal.dir/src/Jugador.cpp.o
+.PHONY : src/Jugador.cpp.o
+
+src/Jugador.i: src/Jugador.cpp.i
+.PHONY : src/Jugador.i
+
+# target to preprocess a source file
+src/Jugador.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MandatoFinal.dir/build.make CMakeFiles/MandatoFinal.dir/src/Jugador.cpp.i
+.PHONY : src/Jugador.cpp.i
+
+src/Jugador.s: src/Jugador.cpp.s
+.PHONY : src/Jugador.s
+
+# target to generate assembly for a file
+src/Jugador.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MandatoFinal.dir/build.make CMakeFiles/MandatoFinal.dir/src/Jugador.cpp.s
+.PHONY : src/Jugador.cpp.s
+
 src/demo.o: src/demo.cpp.o
 .PHONY : src/demo.o
 
@@ -162,6 +234,15 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... MandatoFinal"
+	@echo "... src/Bala.o"
+	@echo "... src/Bala.i"
+	@echo "... src/Bala.s"
+	@echo "... src/Enemigo.o"
+	@echo "... src/Enemigo.i"
+	@echo "... src/Enemigo.s"
+	@echo "... src/Jugador.o"
+	@echo "... src/Jugador.i"
+	@echo "... src/Jugador.s"
 	@echo "... src/demo.o"
 	@echo "... src/demo.i"
 	@echo "... src/demo.s"

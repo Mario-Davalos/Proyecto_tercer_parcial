@@ -83,17 +83,65 @@ CMakeFiles/MandatoFinal.dir/src/demo.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/MandatoFinal.dir/src/demo.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /workspaces/Proyecto_tercer_parcial/src/demo.cpp -o CMakeFiles/MandatoFinal.dir/src/demo.cpp.s
 
+CMakeFiles/MandatoFinal.dir/src/Jugador.cpp.o: CMakeFiles/MandatoFinal.dir/flags.make
+CMakeFiles/MandatoFinal.dir/src/Jugador.cpp.o: /workspaces/Proyecto_tercer_parcial/src/Jugador.cpp
+CMakeFiles/MandatoFinal.dir/src/Jugador.cpp.o: CMakeFiles/MandatoFinal.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/workspaces/Proyecto_tercer_parcial/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/MandatoFinal.dir/src/Jugador.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MandatoFinal.dir/src/Jugador.cpp.o -MF CMakeFiles/MandatoFinal.dir/src/Jugador.cpp.o.d -o CMakeFiles/MandatoFinal.dir/src/Jugador.cpp.o -c /workspaces/Proyecto_tercer_parcial/src/Jugador.cpp
+
+CMakeFiles/MandatoFinal.dir/src/Jugador.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/MandatoFinal.dir/src/Jugador.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /workspaces/Proyecto_tercer_parcial/src/Jugador.cpp > CMakeFiles/MandatoFinal.dir/src/Jugador.cpp.i
+
+CMakeFiles/MandatoFinal.dir/src/Jugador.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/MandatoFinal.dir/src/Jugador.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /workspaces/Proyecto_tercer_parcial/src/Jugador.cpp -o CMakeFiles/MandatoFinal.dir/src/Jugador.cpp.s
+
+CMakeFiles/MandatoFinal.dir/src/Enemigo.cpp.o: CMakeFiles/MandatoFinal.dir/flags.make
+CMakeFiles/MandatoFinal.dir/src/Enemigo.cpp.o: /workspaces/Proyecto_tercer_parcial/src/Enemigo.cpp
+CMakeFiles/MandatoFinal.dir/src/Enemigo.cpp.o: CMakeFiles/MandatoFinal.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/workspaces/Proyecto_tercer_parcial/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/MandatoFinal.dir/src/Enemigo.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MandatoFinal.dir/src/Enemigo.cpp.o -MF CMakeFiles/MandatoFinal.dir/src/Enemigo.cpp.o.d -o CMakeFiles/MandatoFinal.dir/src/Enemigo.cpp.o -c /workspaces/Proyecto_tercer_parcial/src/Enemigo.cpp
+
+CMakeFiles/MandatoFinal.dir/src/Enemigo.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/MandatoFinal.dir/src/Enemigo.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /workspaces/Proyecto_tercer_parcial/src/Enemigo.cpp > CMakeFiles/MandatoFinal.dir/src/Enemigo.cpp.i
+
+CMakeFiles/MandatoFinal.dir/src/Enemigo.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/MandatoFinal.dir/src/Enemigo.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /workspaces/Proyecto_tercer_parcial/src/Enemigo.cpp -o CMakeFiles/MandatoFinal.dir/src/Enemigo.cpp.s
+
+CMakeFiles/MandatoFinal.dir/src/Bala.cpp.o: CMakeFiles/MandatoFinal.dir/flags.make
+CMakeFiles/MandatoFinal.dir/src/Bala.cpp.o: /workspaces/Proyecto_tercer_parcial/src/Bala.cpp
+CMakeFiles/MandatoFinal.dir/src/Bala.cpp.o: CMakeFiles/MandatoFinal.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/workspaces/Proyecto_tercer_parcial/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/MandatoFinal.dir/src/Bala.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MandatoFinal.dir/src/Bala.cpp.o -MF CMakeFiles/MandatoFinal.dir/src/Bala.cpp.o.d -o CMakeFiles/MandatoFinal.dir/src/Bala.cpp.o -c /workspaces/Proyecto_tercer_parcial/src/Bala.cpp
+
+CMakeFiles/MandatoFinal.dir/src/Bala.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/MandatoFinal.dir/src/Bala.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /workspaces/Proyecto_tercer_parcial/src/Bala.cpp > CMakeFiles/MandatoFinal.dir/src/Bala.cpp.i
+
+CMakeFiles/MandatoFinal.dir/src/Bala.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/MandatoFinal.dir/src/Bala.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /workspaces/Proyecto_tercer_parcial/src/Bala.cpp -o CMakeFiles/MandatoFinal.dir/src/Bala.cpp.s
+
 # Object files for target MandatoFinal
 MandatoFinal_OBJECTS = \
-"CMakeFiles/MandatoFinal.dir/src/demo.cpp.o"
+"CMakeFiles/MandatoFinal.dir/src/demo.cpp.o" \
+"CMakeFiles/MandatoFinal.dir/src/Jugador.cpp.o" \
+"CMakeFiles/MandatoFinal.dir/src/Enemigo.cpp.o" \
+"CMakeFiles/MandatoFinal.dir/src/Bala.cpp.o"
 
 # External object files for target MandatoFinal
 MandatoFinal_EXTERNAL_OBJECTS =
 
 MandatoFinal: CMakeFiles/MandatoFinal.dir/src/demo.cpp.o
+MandatoFinal: CMakeFiles/MandatoFinal.dir/src/Jugador.cpp.o
+MandatoFinal: CMakeFiles/MandatoFinal.dir/src/Enemigo.cpp.o
+MandatoFinal: CMakeFiles/MandatoFinal.dir/src/Bala.cpp.o
 MandatoFinal: CMakeFiles/MandatoFinal.dir/build.make
 MandatoFinal: CMakeFiles/MandatoFinal.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/workspaces/Proyecto_tercer_parcial/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable MandatoFinal"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/workspaces/Proyecto_tercer_parcial/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable MandatoFinal"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/MandatoFinal.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

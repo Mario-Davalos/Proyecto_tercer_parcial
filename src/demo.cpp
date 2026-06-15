@@ -1,3 +1,8 @@
+#include "Jugador.h"
+#include "Enemigo.h"
+#include "Bala.h"
+
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <iostream>
@@ -6,7 +11,10 @@ enum EstadoJuego
 {
     MENU,
     SELECCION,
-    MAPA1
+    MAPA1,
+    MAPA2,
+    MAPA3,
+    VICTORIA
 };
 
 SDL_Texture* cargarTextura(
@@ -81,6 +89,19 @@ int main()
             renderer
         );
 
+    // CAMBIO 2: carga de textura mapa2
+    SDL_Texture* mapa2 =
+        cargarTextura(
+            "gallery/mapa-2.jpeg",
+            renderer
+        );
+
+    SDL_Texture* mapa3 =
+        cargarTextura(
+            "gallery/mapa-3.jpeg",
+            renderer
+        );
+
     SDL_Texture* millonario =
         cargarTextura(
             "gallery/Millonario.png",
@@ -123,10 +144,24 @@ int main()
 
     bool balaActiva = false;
 
-    float enemigoX = 1000;
-    float enemigoY = 500;
+    float enemigo1X = 900;
+    float enemigo1Y = 500;
+    bool enemigo1Vivo = true;
 
-    bool enemigoVivo = true;
+    float enemigo2X = 1100;
+    float enemigo2Y = 500;
+    bool enemigo2Vivo = true;
+
+    float enemigo3X = 1300;
+    float enemigo3Y = 500;
+    bool enemigo3Vivo = true;
+
+    int enemigosEliminados = 0;
+
+    int vidaJefe = 10;
+
+    float jefeX = 950;
+    float jefeY = 350;
 
     bool ejecutando = true;
 
@@ -144,7 +179,7 @@ int main()
             if (evento.type == SDL_KEYDOWN)
             {
                 if (
-                    estado == MAPA1 &&
+                    (estado == MAPA1 || estado == MAPA2 || estado == MAPA3) &&
                     evento.key.keysym.sym == SDLK_SPACE &&
                     !balaActiva
                 )
@@ -161,8 +196,14 @@ int main()
                         estado = SELECCION;
                     }
                 }
-                else if (estado == SELECCION)
+                else if (estado == MAPA2)
                 {
+                    if (evento.key.keysym.sym == SDLK_RETURN)
+                    {
+                        estado = MAPA3;
+                    }
+                }
+                else if (estado == SELECCION)                {
                     if (evento.key.keysym.sym == SDLK_RIGHT)
                     {
                         personajeSeleccionado++;
@@ -240,21 +281,153 @@ int main()
                 }
             }
 
-            if (
-                enemigoVivo &&
-                balaActiva
-            )
+            if (enemigo1Vivo && balaActiva)
             {
                 if (
-                    balaX > enemigoX &&
-                    balaX < enemigoX + 120 &&
-                    balaY > enemigoY &&
-                    balaY < enemigoY + 120
+                    balaX > enemigo1X &&
+                    balaX < enemigo1X + 120 &&
+                    balaY > enemigo1Y &&
+                    balaY < enemigo1Y + 120
                 )
                 {
-                    enemigoVivo = false;
+                    enemigo1Vivo = false;
+                    balaActiva = false;
+                    enemigosEliminados++;
+                }
+            }
+
+            if (enemigo2Vivo && balaActiva)
+            {
+                if (
+                    balaX > enemigo2X &&
+                    balaX < enemigo2X + 120 &&
+                    balaY > enemigo2Y &&
+                    balaY < enemigo2Y + 120
+                )
+                {
+                    enemigo2Vivo = false;
+                    balaActiva = false;
+                    enemigosEliminados++;
+                }
+            }
+
+            if (enemigo3Vivo && balaActiva)
+            {
+                if (
+                    balaX > enemigo3X &&
+                    balaX < enemigo3X + 120 &&
+                    balaY > enemigo3Y &&
+                    balaY < enemigo3Y + 120
+                )
+                {
+                    enemigo3Vivo = false;
+                    balaActiva = false;
+                    enemigosEliminados++;
+                }
+            }
+
+            // CAMBIO 3: transicion a MAPA2 al eliminar los 3 enemigos
+            if (enemigosEliminados >= 3)
+            {
+                estado = MAPA2;
+            }
+        }
+
+        // Lógica de MAPA2: disparo y transición a MAPA3
+        if (estado == MAPA2)
+        {
+            if (teclado[SDL_SCANCODE_A])
+            {
+                jugadorX -= 6;
+                mirandoDerecha = false;
+            }
+
+            if (teclado[SDL_SCANCODE_D])
+            {
+                jugadorX += 6;
+                mirandoDerecha = true;
+            }
+
+            if (balaActiva)
+            {
+                if (mirandoDerecha)
+                    balaX += 12;
+                else
+                    balaX -= 12;
+
+                if (balaX > 1400 || balaX < -50)
+                {
                     balaActiva = false;
                 }
+            }
+        }
+
+        // Lógica de MAPA3: jefe
+        if (estado == MAPA3)
+        {
+            if (teclado[SDL_SCANCODE_A])
+            {
+                jugadorX -= 6;
+                mirandoDerecha = false;
+            }
+
+            if (teclado[SDL_SCANCODE_D])
+            {
+                jugadorX += 6;
+                mirandoDerecha = true;
+            }
+
+            if (
+                teclado[SDL_SCANCODE_W] &&
+                enSuelo
+            )
+            {
+                velocidadY = -15;
+                enSuelo = false;
+            }
+
+            velocidadY += 0.6f;
+            jugadorY += velocidadY;
+
+            if (jugadorY >= 500)
+            {
+                jugadorY = 500;
+                velocidadY = 0;
+                enSuelo = true;
+            }
+
+            if (balaActiva)
+            {
+                if (mirandoDerecha)
+                    balaX += 12;
+                else
+                    balaX -= 12;
+
+                if (balaX > 1400 || balaX < -50)
+                {
+                    balaActiva = false;
+                }
+            }
+
+            // Cambio 6: colisión con el jefe
+            if (balaActiva)
+            {
+                if (
+                    balaX > jefeX &&
+                    balaX < jefeX + 250 &&
+                    balaY > jefeY &&
+                    balaY < jefeY + 250
+                )
+                {
+                    vidaJefe--;
+                    balaActiva = false;
+                }
+            }
+
+            // Cambio 7: victoria
+            if (vidaJefe <= 0)
+            {
+                estado = VICTORIA;
             }
         }
 
@@ -337,12 +510,12 @@ int main()
                 &jugador
             );
 
-            if (enemigoVivo)
+            if (enemigo1Vivo)
             {
                 SDL_Rect enemigo =
                 {
-                    (int)enemigoX,
-                    (int)enemigoY,
+                    (int)enemigo1X,
+                    (int)enemigo1Y,
                     120,
                     120
                 };
@@ -361,29 +534,110 @@ int main()
                 );
             }
 
-            if (balaActiva)
+            if (enemigo2Vivo)
             {
-                SDL_Rect bala =
+                SDL_Rect enemigo =
                 {
-                    (int)balaX,
-                    (int)balaY,
-                    20,
-                    10
+                    (int)enemigo2X,
+                    (int)enemigo2Y,
+                    120,
+                    120
                 };
 
                 SDL_SetRenderDrawColor(
                     renderer,
                     255,
-                    255,
+                    0,
                     0,
                     255
                 );
 
                 SDL_RenderFillRect(
                     renderer,
-                    &bala
+                    &enemigo
                 );
             }
+
+            if (enemigo3Vivo)
+            {
+                SDL_Rect enemigo =
+                {
+                    (int)enemigo3X,
+                    (int)enemigo3Y,
+                    120,
+                    120
+                };
+
+                SDL_SetRenderDrawColor(
+                    renderer,
+                    255,
+                    0,
+                    0,
+                    255
+                );
+
+                SDL_RenderFillRect(
+                    renderer,
+                    &enemigo
+                );
+            }
+        }
+
+        // CAMBIO 4: dibujar mapa2
+        if (estado == MAPA2)
+        {
+            SDL_RenderCopy(
+                renderer,
+                mapa2,
+                nullptr,
+                nullptr
+            );
+        }
+
+        // Cambio 5: dibujar mapa3 con jefe
+        if (estado == MAPA3)
+        {
+            SDL_RenderCopy(
+                renderer,
+                mapa3,
+                nullptr,
+                nullptr
+            );
+
+            SDL_Rect jefe =
+            {
+                (int)jefeX,
+                (int)jefeY,
+                250,
+                250
+            };
+
+            SDL_SetRenderDrawColor(
+                renderer,
+                0,
+                0,
+                255,
+                255
+            );
+
+            SDL_RenderFillRect(
+                renderer,
+                &jefe
+            );
+        }
+
+        // Cambio 8: pantalla de victoria
+        if (estado == VICTORIA)
+        {
+            SDL_SetRenderDrawColor(
+                renderer,
+                0,
+                180,
+                0,
+                255
+            );
+
+            SDL_RenderClear(renderer);
         }
 
         SDL_RenderPresent(renderer);
@@ -394,6 +648,8 @@ int main()
     SDL_DestroyTexture(menu);
     SDL_DestroyTexture(seleccion);
     SDL_DestroyTexture(mapa1);
+    SDL_DestroyTexture(mapa2);       // CAMBIO 5: liberar mapa2
+    SDL_DestroyTexture(mapa3);
 
     SDL_DestroyTexture(millonario);
     SDL_DestroyTexture(buchona);

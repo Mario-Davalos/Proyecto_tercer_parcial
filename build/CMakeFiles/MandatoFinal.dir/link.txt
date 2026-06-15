@@ -1,1 +1,1 @@
-/usr/bin/c++ CMakeFiles/MandatoFinal.dir/src/demo.cpp.o -o MandatoFinal  -lSDL2 -lSDL2_image -lSDL2 -lSDL2_image 
+/usr/bin/c++ CMakeFiles/MandatoFinal.dir/src/demo.cpp.o CMakeFiles/MandatoFinal.dir/src/Jugador.cpp.o CMakeFiles/MandatoFinal.dir/src/Enemigo.cpp.o CMakeFiles/MandatoFinal.dir/src/Bala.cpp.o -o MandatoFinal  -lSDL2 -lSDL2_image -lSDL2 -lSDL2_image 

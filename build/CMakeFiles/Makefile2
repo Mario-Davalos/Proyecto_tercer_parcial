@@ -81,12 +81,12 @@ clean: CMakeFiles/MandatoFinal.dir/clean
 CMakeFiles/MandatoFinal.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/MandatoFinal.dir/build.make CMakeFiles/MandatoFinal.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/MandatoFinal.dir/build.make CMakeFiles/MandatoFinal.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/workspaces/Proyecto_tercer_parcial/build/CMakeFiles --progress-num=1,2 "Built target MandatoFinal"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/workspaces/Proyecto_tercer_parcial/build/CMakeFiles --progress-num=1,2,3,4,5 "Built target MandatoFinal"
 .PHONY : CMakeFiles/MandatoFinal.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/MandatoFinal.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /workspaces/Proyecto_tercer_parcial/build/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /workspaces/Proyecto_tercer_parcial/build/CMakeFiles 5
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/MandatoFinal.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /workspaces/Proyecto_tercer_parcial/build/CMakeFiles 0
 .PHONY : CMakeFiles/MandatoFinal.dir/rule
