@@ -1,0 +1,14 @@
+name: Publish Game
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Publicado
+        run: echo "Juego subido a CETUS commit"
